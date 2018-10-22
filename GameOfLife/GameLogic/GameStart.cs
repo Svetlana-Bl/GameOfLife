@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using GameOfLife.GameLogic;
 
 namespace GameOfLife
 {
@@ -27,9 +28,9 @@ namespace GameOfLife
             UniverseField newField;
             if (generateThousandGames == true)
             {
-                Thread GenerationThread = new Thread(new ThreadStart(GenerateThousandGames));
-                GenerationThread.Name = String.Format("ThreadGenerator");
-                GenerationThread.Start();
+                //Thread GenerationThread = new Thread(new ThreadStart(GenerateThousandGames));
+                //GenerationThread.Name = String.Format("ThreadGenerator");
+                //GenerationThread.Start();
             }
             else {
                 for (int i = 0; i < GameCount; i++) {
@@ -38,9 +39,9 @@ namespace GameOfLife
                 }
             }
 
-            Thread StopThread = new Thread(new ThreadStart(StopIterations));
-            StopThread.Name = String.Format("StopThread");
-            StopThread.Start();
+            //Thread StopThread = new Thread(new ThreadStart(StopIterations));
+            //StopThread.Name = String.Format("StopThread");
+            //StopThread.Start();
 
             for (int i = 0; Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape|| i < GameCount; i++)
             {
@@ -50,25 +51,27 @@ namespace GameOfLife
             }
         }
 
-        private void StopIterations() {
-            while (!Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) { }
-            //Thread.CurrentThread.Suspend();
+        //private void StopIterations() {
+        //    while (!Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) { }
+        //    //Thread.CurrentThread.Suspend();
+            
+        //    //Save to file
+        //    SaveRestoreGame saveAllGamesToFile = new SaveRestoreGame();
+        //    saveAllGamesToFile.SaveDataToFile(allCurrentGames);
+        //}
 
-            //Save to file
-            SaveRestoreGame saveAllGamesToFile = new SaveRestoreGame();
-            saveAllGamesToFile.SaveDataToFile(allCurrentGames);
-        }
-
-        private void GenerateThousandGames() {
-            for (int i = 0; i < 1000; i++)
-            {
-                UniverseField newField = new UniverseField(FieldSize);
-                allCurrentGames.Add(newField.GenerateField());
-            }
-        }
+        //private void GenerateThousandGames() {
+        //    for (int i = 0; i < 1000; i++)
+        //    {
+        //        UniverseField newField = new UniverseField(FieldSize);
+        //        allCurrentGames.Add(newField.GenerateField());
+        //    }
+        //}
 
         private void StartIterations(){
-            GameRules gamerules = new GameRules();
+            FieldLifeCreation lifeCreation = new FieldLifeCreation();
+            CountLiveCellsOfField countLiveCells = new CountLiveCellsOfField();
+            OutputField outputCurrentField = new OutputField();
             for (int j = 0; !(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape); j++) {
                 if (mut.WaitOne(1000))
                 {
@@ -82,33 +85,17 @@ namespace GameOfLife
                     {
                         if (mut.WaitOne() && idThread == Thread.CurrentThread.ManagedThreadId)
                         {
-                            
-                            ShowField(allCurrentGames[i]);
-                            LifeCellsNumber += gamerules.CountOfLiveCells(allCurrentGames[i], FieldSize);
-                            Console.WriteLine("Live cells count: {0}", gamerules.CountOfLiveCells(allCurrentGames[i], FieldSize));
-                            allCurrentGames[i]= gamerules.LifeCreation(allCurrentGames[i], FieldSize);
+
+                            outputCurrentField.ShowField(allCurrentGames[i],FieldSize);
+                            LifeCellsNumber += countLiveCells.CountOfLiveCells(allCurrentGames[i], FieldSize);
+                            Console.WriteLine("Live cells count: {0}", countLiveCells.CountOfLiveCells(allCurrentGames[i], FieldSize));
+                            allCurrentGames[i]= lifeCreation.LifeCreation(allCurrentGames[i], FieldSize);
                         }
                     }
                     Console.WriteLine("Total life cell count {0}", LifeCellsNumber);
                     Console.WriteLine("Total games count {0}", GameCount);
                     mut.ReleaseMutex();
                 }
-            }
-        }
-
-        private void ShowField(bool[,] universeToShow)
-        {
-            Console.WriteLine(" ");
-            char outputValue;
-            for (int i = 0; i < FieldSize; i++)
-            {
-                for (int j = 0; j < FieldSize; j++)
-                {
-                    if (universeToShow[i, j] == true) outputValue = '■';
-                    else outputValue = '-';
-                    Console.Write(String.Format("{0,3}", outputValue));
-                }
-                Console.WriteLine();
             }
         }
     }
