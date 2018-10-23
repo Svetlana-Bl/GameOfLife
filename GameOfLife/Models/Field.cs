@@ -14,7 +14,7 @@
             {
                 if(value<3)
                     fieldSize = 3;
-                else if(value>20) fieldSize = 30;
+                else if(value>20) fieldSize = 20;
                 else fieldSize = value;
             }
         }

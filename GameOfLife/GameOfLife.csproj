@@ -50,11 +50,11 @@
     <Compile Include="Models\CurrentGames.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="GameLogic\NeighborsLiveCellsCount.cs" />
-    <Compile Include="UI\UserInterfaceMenu.cs" />
-    <Compile Include="GameLogic\GameStart.cs" />
+    <Compile Include="UserInterface\UserInterfaceMenu.cs" />
+    <Compile Include="GameLogic\StartIterationsForAllGames.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\SaveRestoreGame.cs" />
+    <Compile Include="UserInterface\SaveRestoreGame.cs" />
     <Compile Include="GameLogic\FieldGeneration.cs" />
   </ItemGroup>
   <ItemGroup>
