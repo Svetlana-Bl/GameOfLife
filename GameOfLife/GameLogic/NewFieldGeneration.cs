@@ -3,9 +3,9 @@ using GameOfLife.Model;
 
 namespace GameOfLife
 {
-    public class FieldGeneration
+    public class NewFieldGeneration
     {
-        public bool[,] GenerateField(int FieldSize)
+        public bool[,] GenerateFieldOfOneGame(int FieldSize)
         {
             Field newfield = new Field();
 

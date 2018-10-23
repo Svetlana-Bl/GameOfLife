@@ -1,8 +1,8 @@
 ﻿namespace GameOfLife
 {
-    public class CountLiveCellsOfField
+    public class LiveCellsOfField
     {
-        public int CountOfLiveCells(bool[,] universe, int FieldSize)
+        public int CountLiveCells(bool[,] universe, int FieldSize)
         {
             int cellsCount = 0;
             for (int i = 0; i < FieldSize; i++)

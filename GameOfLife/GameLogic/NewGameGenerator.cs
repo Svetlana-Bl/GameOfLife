@@ -7,11 +7,11 @@ namespace GameOfLife.GameLogic
     {
         public CurrentGames GenerateGamesFields(CurrentGames currentGames, Field currentField)
         {
-            FieldGeneration generateNewField = new FieldGeneration();
+            NewFieldGeneration generateNewField = new NewFieldGeneration();
 
             for (int i = 0; i < currentGames.GameCount; i++)
             {
-                currentGames.AllCurrentGames.Add(generateNewField.GenerateField(currentField.FieldSize));
+                currentGames.AllCurrentGames.Add(generateNewField.GenerateFieldOfOneGame(currentField.FieldSize));
             }
             return currentGames;
         }

@@ -7,7 +7,7 @@ namespace GameOfLife
 {
     public class SaveRestoreGame
     {
-        public void SaveDataToFile(List<bool[,]> gameUniverse)
+        public void SaveDataToFile(IList<bool[,]> gameUniverse)
         {
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream("Desktop\\GameOfLife.txt", FileMode.Create, FileAccess.Write);

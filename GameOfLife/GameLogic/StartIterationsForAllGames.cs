@@ -7,7 +7,7 @@ using GameOfLife.Models;
 
 namespace GameOfLife
 {
-    public class StartIterationsForAllGames
+    public class StartAllGames
     {
         private static Mutex mut = new Mutex();
         Field currentField = new Field();
@@ -15,14 +15,14 @@ namespace GameOfLife
 
         NewGameGenerator newGameGenerator = new NewGameGenerator();
        
-        public void StartAllGames(int FieldSize, int GameCount)
+        public void StartIterationsForAllGames(int FieldSize, int GameCount)
         {
             currentField.FieldSize = FieldSize;
             currentGames.AllCurrentGames = new List<bool[,]>();
             currentGames.GameCount = GameCount;
             newGameGenerator.GenerateGamesFields(currentGames, currentField);
 
-            for (int i = 0; Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape|| i < currentGames.GameCount; i++)
+            for (int i = 0; i < currentGames.GameCount; i++)
             {
                 Thread GamesThread = new Thread(new ThreadStart(StartIterations));
                 GamesThread.Name = String.Format("Thread{0}", i + 1);
@@ -31,8 +31,8 @@ namespace GameOfLife
         }
 
         private void StartIterations(){
-            FieldNextIterationOfLife lifeCreation = new FieldNextIterationOfLife();
-            CountLiveCellsOfField countLiveCells = new CountLiveCellsOfField();
+            FieldNextGeneration lifeCreation = new FieldNextGeneration();
+            LiveCellsOfField countLiveCells = new LiveCellsOfField();
             OutputField outputCurrentField = new OutputField();
 
             for (int j = 0; !(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape); j++) {
@@ -50,12 +50,12 @@ namespace GameOfLife
                         {
 
                             outputCurrentField.ShowField(currentGames.AllCurrentGames[i], currentField.FieldSize);
-                            currentGames.LifeCellsNumber += countLiveCells.CountOfLiveCells(currentGames.AllCurrentGames[i], currentField.FieldSize);
-                            Console.WriteLine("Live cells count: {0}", countLiveCells.CountOfLiveCells(currentGames.AllCurrentGames[i], currentField.FieldSize));
-                            currentGames.AllCurrentGames[i]= lifeCreation.NextGeneration(currentGames.AllCurrentGames[i], currentField.FieldSize);
+                            currentGames.LifeCellsNumber += countLiveCells.CountLiveCells(currentGames.AllCurrentGames[i], currentField.FieldSize);
+                            Console.WriteLine("Live cells count: {0}", countLiveCells.CountLiveCells(currentGames.AllCurrentGames[i], currentField.FieldSize));
+                            currentGames.AllCurrentGames[i]= lifeCreation.NextIterationOfLife(currentGames.AllCurrentGames[i], currentField.FieldSize);
                         }
                     }
-                    Console.WriteLine("Total life cell count {0}", currentGames.LifeCellsNumber);
+                    Console.WriteLine("\nTotal life cell count {0}", currentGames.LifeCellsNumber);
                     Console.WriteLine("Total games count {0}", currentGames.GameCount);
                     mut.ReleaseMutex();
                 }

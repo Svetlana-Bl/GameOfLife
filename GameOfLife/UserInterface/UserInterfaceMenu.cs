@@ -4,7 +4,7 @@ namespace GameOfLife
 {
     public class UserInterfaceMenu
     {
-        public void MenuOutput() {
+        public void OutputMenu() {
             bool menuOutput = true;
             while (menuOutput)
             {
@@ -15,15 +15,15 @@ namespace GameOfLife
                 Console.WriteLine("1. Start game.");
                 Console.WriteLine("2. Delete all games from file.");
                 Console.WriteLine("--------------------------------");
-                var answer=0;
+                var answer = 0;
 
-                answer=InputParameterCheck("Choice: ");
+                answer = CheckInputParameter("Choice: ");
 
                 switch (answer)
                 {
                     case (int)MenuChoice.RunGamesOrStartNew:
-                        StartIterationsForAllGames start = new StartIterationsForAllGames();
-                        start.StartAllGames(InputParameterCheck("Enter field size, then press Enter: "), InputParameterCheck("Enter number of games, then press Enter: "));
+                        StartAllGames start = new StartAllGames();
+                        start.StartIterationsForAllGames(CheckInputParameter("Enter field size, then press Enter: "), CheckInputParameter("Enter number of games, then press Enter: "));
                         Console.Clear();
                         menuOutput = false;
                         break;
@@ -39,7 +39,7 @@ namespace GameOfLife
             Console.ReadKey();
         }
 
-        private int InputParameterCheck(string outputString)
+        private int CheckInputParameter(string outputString)
         {
             bool Valid = false;
             int parameterToInt;

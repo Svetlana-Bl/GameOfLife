@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameOfLife
+﻿namespace GameOfLife
 {
     class NeighborsLiveCellsCount
     {
-        public int NeighborsLiveCount(int i, int j, bool[,] universe, int FieldSize)
+        public int CountNeighborsLive(int i, int j, bool[,] universe, int FieldSize)
         {
             var LiveNeighborsNumber = 0;
             int startRowCoordinate = i - 1, endRowCoordinate = i + 2, startColumnCoordinate = j - 1, endColumnCoordinate = j + 2;
