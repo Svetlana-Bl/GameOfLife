@@ -1,8 +1,8 @@
 ﻿namespace GameOfLife
 {
-    public class FieldLifeCreation
+    public class FieldNextIterationOfLife
     {
-        public bool[,] LifeCreation(bool[,] universe, int FieldSize)
+        public bool[,] NextGeneration(bool[,] universe, int FieldSize)
         {
             NeighborsLiveCellsCount neighborsLiveCellsCount = new NeighborsLiveCellsCount();
             bool[,] nextGeneration = new bool[FieldSize, FieldSize];

@@ -22,8 +22,8 @@ namespace GameOfLife
                 switch (answer)
                 {
                     case (int)MenuChoice.RunGamesOrStartNew:
-                        GameStart gameStart = new GameStart(InputParameterCheck("Enter field size, then press Enter: "), InputParameterCheck("Enter number of games, then press Enter: "));
-                        gameStart.StartAllGames(false);
+                        GameStart gameStart = new GameStart();
+                        gameStart.StartAllGames(InputParameterCheck("Enter field size, then press Enter: "), InputParameterCheck("Enter number of games, then press Enter: "));
                         Console.Clear();
                         menuOutput = false;
                         break;

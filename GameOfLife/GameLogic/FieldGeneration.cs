@@ -1,18 +1,14 @@
 ﻿using System;
+using GameOfLife.Model;
 
 namespace GameOfLife
 {
-    public class UniverseField
+    public class FieldGeneration
     {
-        private int FieldSize { get; set; }
-
-        public UniverseField(int FieldSize)
+        public bool[,] GenerateField(int FieldSize)
         {
-            this.FieldSize = FieldSize;
-        }
+            Field newfield = new Field();
 
-        public bool[,] GenerateField()
-        {
             bool[,] universeField;
             universeField = new bool[FieldSize, FieldSize];
             Random rand = new Random();

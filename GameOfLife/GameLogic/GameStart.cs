@@ -2,48 +2,33 @@
 using System.Collections.Generic;
 using System.Threading;
 using GameOfLife.GameLogic;
+using GameOfLife.Model;
+using GameOfLife.Models;
 
 namespace GameOfLife
 {
     public class GameStart
     {
-        private static Mutex mut = new Mutex();
         private int LifeCellsNumber { get; set; }
-        private int FieldSize { get; set; }
-        private int GameCount { get; set; }
-        private List<bool[,]> allCurrentGames;
 
-        public GameStart(int fieldSize, int gameCount)
+        private static Mutex mut = new Mutex();
+        Field currentField = new Field();
+        CurrentGames currentGames;
+
+        public void StartAllGames(int FieldSize, int GameCount)
         {
-            if (fieldSize < 3) FieldSize = 3;
-            else if(fieldSize>20) FieldSize = 20;
-            else FieldSize = fieldSize;
+            FieldGeneration generateNewField;
+            currentField = new Field();
+            currentField.FieldSize = FieldSize;
+            currentGames.AllCurrentGames = new List<bool[,]>();
+            currentGames.GameCount = currentGames.GameCount;
 
-            GameCount = gameCount;
-            allCurrentGames = new List<bool[,]>();
-        }
-
-        public void StartAllGames(bool generateThousandGames)
-        {
-            UniverseField newField;
-            if (generateThousandGames == true)
-            {
-                //Thread GenerationThread = new Thread(new ThreadStart(GenerateThousandGames));
-                //GenerationThread.Name = String.Format("ThreadGenerator");
-                //GenerationThread.Start();
+            for (int i = 0; i < currentGames.GameCount; i++) {
+                generateNewField = new FieldGeneration();
+                currentGames.AllCurrentGames.Add(generateNewField.GenerateField(FieldSize));
             }
-            else {
-                for (int i = 0; i < GameCount; i++) {
-                    newField = new UniverseField(FieldSize);
-                    allCurrentGames.Add(newField.GenerateField());
-                }
-            }
-
-            //Thread StopThread = new Thread(new ThreadStart(StopIterations));
-            //StopThread.Name = String.Format("StopThread");
-            //StopThread.Start();
-
-            for (int i = 0; Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape|| i < GameCount; i++)
+            
+            for (int i = 0; Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape|| i < currentGames.GameCount; i++)
             {
                 Thread GamesThread = new Thread(new ThreadStart(StartIterations));
                 GamesThread.Name = String.Format("Thread{0}", i + 1);
@@ -51,27 +36,11 @@ namespace GameOfLife
             }
         }
 
-        //private void StopIterations() {
-        //    while (!Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) { }
-        //    //Thread.CurrentThread.Suspend();
-            
-        //    //Save to file
-        //    SaveRestoreGame saveAllGamesToFile = new SaveRestoreGame();
-        //    saveAllGamesToFile.SaveDataToFile(allCurrentGames);
-        //}
-
-        //private void GenerateThousandGames() {
-        //    for (int i = 0; i < 1000; i++)
-        //    {
-        //        UniverseField newField = new UniverseField(FieldSize);
-        //        allCurrentGames.Add(newField.GenerateField());
-        //    }
-        //}
-
         private void StartIterations(){
-            FieldLifeCreation lifeCreation = new FieldLifeCreation();
+            FieldNextIterationOfLife lifeCreation = new FieldNextIterationOfLife();
             CountLiveCellsOfField countLiveCells = new CountLiveCellsOfField();
             OutputField outputCurrentField = new OutputField();
+
             for (int j = 0; !(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape); j++) {
                 if (mut.WaitOne(1000))
                 {
@@ -81,19 +50,19 @@ namespace GameOfLife
                     Console.Clear();
                     Console.WriteLine("Iteration {0}", j);
 
-                    for (int i = 0; i < GameCount; i++)
+                    for (int i = 0; i < currentGames.GameCount; i++)
                     {
                         if (mut.WaitOne() && idThread == Thread.CurrentThread.ManagedThreadId)
                         {
 
-                            outputCurrentField.ShowField(allCurrentGames[i],FieldSize);
-                            LifeCellsNumber += countLiveCells.CountOfLiveCells(allCurrentGames[i], FieldSize);
-                            Console.WriteLine("Live cells count: {0}", countLiveCells.CountOfLiveCells(allCurrentGames[i], FieldSize));
-                            allCurrentGames[i]= lifeCreation.LifeCreation(allCurrentGames[i], FieldSize);
+                            outputCurrentField.ShowField(currentGames.AllCurrentGames[i], currentField.FieldSize);
+                            LifeCellsNumber += countLiveCells.CountOfLiveCells(currentGames.AllCurrentGames[i], currentField.FieldSize);
+                            Console.WriteLine("Live cells count: {0}", countLiveCells.CountOfLiveCells(currentGames.AllCurrentGames[i], currentField.FieldSize));
+                            currentGames.AllCurrentGames[i]= lifeCreation.NextGeneration(currentGames.AllCurrentGames[i], currentField.FieldSize);
                         }
                     }
                     Console.WriteLine("Total life cell count {0}", LifeCellsNumber);
-                    Console.WriteLine("Total games count {0}", GameCount);
+                    Console.WriteLine("Total games count {0}", currentGames.GameCount);
                     mut.ReleaseMutex();
                 }
             }
