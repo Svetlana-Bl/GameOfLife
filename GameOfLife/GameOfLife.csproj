@@ -43,10 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\MenuChoice.cs" />
     <Compile Include="GameLogic\CountLiveCellsOfField.cs" />
     <Compile Include="GameLogic\FieldLifeCreation.cs" />
     <Compile Include="GameLogic\OutputField.cs" />
-    <Compile Include="Model\Field.cs" />
+    <Compile Include="Models\Field.cs" />
     <Compile Include="GameLogic\NeighborsLiveCellsCount.cs" />
     <Compile Include="UI\UserInterfaceMenu.cs" />
     <Compile Include="GameLogic\GameStart.cs" />

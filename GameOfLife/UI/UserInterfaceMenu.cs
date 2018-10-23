@@ -4,8 +4,6 @@ namespace GameOfLife
 {
     public class UserInterfaceMenu
     {
-        enum MenuChoice {RunGamesOrStartNew = 1, DeleteAllGames};
-
         public void MenuOutput() {
             bool menuOutput = true;
             while (menuOutput)
@@ -25,7 +23,7 @@ namespace GameOfLife
                 {
                     case (int)MenuChoice.RunGamesOrStartNew:
                         GameStart gameStart = new GameStart(InputParameterCheck("Enter field size, then press Enter: "), InputParameterCheck("Enter number of games, then press Enter: "));
-                        gameStart.StartAllGames(false);//TODO make logic for parameter
+                        gameStart.StartAllGames(false);
                         Console.Clear();
                         menuOutput = false;
                         break;
