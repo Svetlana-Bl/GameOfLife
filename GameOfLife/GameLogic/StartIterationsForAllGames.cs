@@ -11,18 +11,17 @@ namespace GameOfLife
     {
         private static Mutex mut = new Mutex();
         Field currentField = new Field();
-        CurrentGames currentGames=new CurrentGames();
-        FieldGeneration generateNewField = new FieldGeneration();
+        CurrentGames currentGames = new CurrentGames();
+
+        NewGameGenerator newGameGenerator = new NewGameGenerator();
+       
         public void StartAllGames(int FieldSize, int GameCount)
         {
             currentField.FieldSize = FieldSize;
             currentGames.AllCurrentGames = new List<bool[,]>();
             currentGames.GameCount = GameCount;
+            newGameGenerator.GenerateGamesFields(currentGames, currentField);
 
-            for (int i = 0; i < currentGames.GameCount; i++) {
-                currentGames.AllCurrentGames.Add(generateNewField.GenerateField(FieldSize));
-            }
-            
             for (int i = 0; Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape|| i < currentGames.GameCount; i++)
             {
                 Thread GamesThread = new Thread(new ThreadStart(StartIterations));

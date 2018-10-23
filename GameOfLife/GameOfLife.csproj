@@ -46,6 +46,7 @@
     <Compile Include="Enum\MenuChoice.cs" />
     <Compile Include="GameLogic\CountLiveCellsOfField.cs" />
     <Compile Include="GameLogic\FieldNextIterationOfLife.cs" />
+    <Compile Include="GameLogic\NewGameGenerator.cs" />
     <Compile Include="GameLogic\OutputField.cs" />
     <Compile Include="Models\CurrentGames.cs" />
     <Compile Include="Models\Field.cs" />
