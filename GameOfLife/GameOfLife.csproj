@@ -44,15 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enum\MenuChoice.cs" />
-    <Compile Include="GameLogic\CountLiveCellsOfField.cs" />
-    <Compile Include="GameLogic\FieldNextIterationOfLife.cs" />
+    <Compile Include="GameLogic\LiveCellsOfField.cs" />
+    <Compile Include="GameLogic\FieldNextGeneration.cs" />
     <Compile Include="GameLogic\NewGameGenerator.cs" />
     <Compile Include="GameLogic\OutputField.cs" />
     <Compile Include="Models\CurrentGames.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="GameLogic\NeighborsLiveCellsCount.cs" />
     <Compile Include="UserInterface\UserInterfaceMenu.cs" />
-    <Compile Include="GameLogic\StartIterationsForAllGames.cs" />
+    <Compile Include="GameLogic\StartAllGames.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInterface\SaveRestoreGame.cs" />
