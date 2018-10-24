@@ -4,7 +4,7 @@ namespace GameOfLife.GameLogic
 {
     public class OutputField
     {
-        public void ShowField(bool[,] universeToShow, int FieldSize)
+        public static void ShowField(bool[,] universeToShow, int FieldSize)
         {
             Console.WriteLine(" ");
             char outputValue;

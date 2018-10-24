@@ -2,7 +2,7 @@
 {
     public class FieldNextGeneration
     {
-        public bool[,] NextIterationOfLife(bool[,] universe, int FieldSize)
+        public static bool[,] NextIterationOfLife(bool[,] universe, int FieldSize)
         {
             NeighborsLiveCellsCount neighborsLiveCellsCount = new NeighborsLiveCellsCount();
             bool[,] nextGeneration = new bool[FieldSize, FieldSize];

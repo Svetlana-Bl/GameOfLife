@@ -3,6 +3,6 @@
     enum MenuChoice
     {
        RunGamesOrStartNew = 1,
-       DeleteAllGames
+       RestoreAllGames
     };
 }

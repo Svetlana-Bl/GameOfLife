@@ -4,7 +4,8 @@ namespace GameOfLife
 {
     public class UserInterfaceMenu
     {
-        public void OutputMenu() {
+        public void OutputMenu()
+        {
             bool menuOutput = true;
             while (menuOutput)
             {
@@ -12,23 +13,30 @@ namespace GameOfLife
                 Console.WriteLine("-----Welcome to game of Life----");
                 Console.WriteLine("--------------------------------");
                 Console.WriteLine("\n--------------Menu--------------");
-                Console.WriteLine("1. Start game.");
-                Console.WriteLine("2. Delete all games from file.");
+                Console.WriteLine("1. Start new game.");
+                Console.WriteLine("2. Restore games from file.");
                 Console.WriteLine("--------------------------------");
                 var answer = 0;
 
                 answer = CheckInputParameter("Choice: ");
-
+                StartAllGames start = new StartAllGames();
                 switch (answer)
                 {
                     case (int)MenuChoice.RunGamesOrStartNew:
-                        StartAllGames start = new StartAllGames();
-                        start.StartIterationsForAllGames(CheckInputParameter("Enter field size, then press Enter: "), CheckInputParameter("Enter number of games, then press Enter: "));
+                        
+                        var fieldSize = CheckInputParameter("Enter field size, then press Enter: ");
+                        var gameCount = CheckInputParameter("Enter number of games, then press Enter: ");
+                        GamePause.On();
+                        start.GameParametersSet(fieldSize, gameCount);
+                        start.StartIterationsForAllGames(false);
                         Console.Clear();
                         menuOutput = false;
                         break;
-                    case (int)MenuChoice.DeleteAllGames:
-                        menuOutput = true;
+                    case (int)MenuChoice.RestoreAllGames:
+                        GamePause.On();
+                        start.StartIterationsForAllGames(true);
+                        Console.Clear();
+                        menuOutput = false;
                         break;
                     default:
                         Console.WriteLine("Incorrect input. Write the number of your choice.");

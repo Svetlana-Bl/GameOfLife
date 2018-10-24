@@ -5,7 +5,7 @@ namespace GameOfLife
 {
     public class NewFieldGeneration
     {
-        public bool[,] GenerateFieldOfOneGame(int FieldSize)
+        public static bool[,] GenerateFieldOfOneGame(int FieldSize)
         {
             Field newfield = new Field();
 

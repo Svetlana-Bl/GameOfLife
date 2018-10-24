@@ -48,6 +48,8 @@
     <Compile Include="GameLogic\FieldNextGeneration.cs" />
     <Compile Include="GameLogic\NewGameGenerator.cs" />
     <Compile Include="GameLogic\OutputField.cs" />
+    <Compile Include="GameLogic\GamePause.cs" />
+    <Compile Include="Models\SavedGame.cs" />
     <Compile Include="Models\CurrentGames.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="GameLogic\NeighborsLiveCellsCount.cs" />

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
  
@@ -7,20 +6,20 @@ namespace GameOfLife
 {
     public class SaveRestoreGame
     {
-        public void SaveDataToFile(IList<bool[,]> gameUniverse)
+        public static void SaveDataToFile(SavedGame game)
         {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("Desktop\\GameOfLife.txt", FileMode.Create, FileAccess.Write);
-            formatter.Serialize(stream, gameUniverse);
+            Stream stream = new FileStream("GameOfLife.txt", FileMode.Create, FileAccess.Write);
+            formatter.Serialize(stream, game);
             stream.Close();
         }
 
-        public List<bool[,]> RestoreDataFromFile()
+        public static SavedGame RestoreDataFromFile()
         {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("Desktop\\GameOfLife.txt", FileMode.Open, FileAccess.Read);
-            List<bool[,]> gameUniverse = (List<bool[,]>)formatter.Deserialize(stream);
-            return gameUniverse;
+            Stream stream = new FileStream("GameOfLife.txt", FileMode.Open, FileAccess.Read);
+            SavedGame game = (SavedGame)formatter.Deserialize(stream);
+            return game;
         }
     }
 }
