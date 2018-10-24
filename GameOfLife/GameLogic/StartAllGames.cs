@@ -98,7 +98,7 @@ namespace GameOfLife
                             gameToSave.FieldSize = currentField.FieldSize;
                             SaveRestoreGame.SaveDataToFile(gameToSave);
                             Console.WriteLine("Pause. Press c to continue");
-                            //Environment.Exit(0);
+                            Environment.Exit(0);
                         }
                         mut.ReleaseMutex();
                     }
